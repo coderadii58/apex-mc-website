@@ -4,19 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>APEX MC | Minecraft Survival</title>
+<title>APEX MC | Survival</title>
 
 <style>
 :root{
-    --bg:#02060d;
-    --bg2:#06101d;
-    --card:rgba(7,18,31,.82);
-    --blue:#20bfff;
-    --cyan:#6eeaff;
-    --purple:#7567ff;
-    --white:#f4f9ff;
-    --muted:#91a1b5;
-    --border:rgba(91,211,255,.16);
+    --black:#050505;
+    --black2:#090909;
+    --panel:#0d0d0d;
+    --gold:#d8aa4a;
+    --gold2:#f4d27a;
+    --gold3:#fff0b0;
+    --muted:#9b9b9b;
+    --white:#f7f3e8;
+    --line:rgba(216,170,74,.18);
 }
 
 *{
@@ -28,47 +28,99 @@
 
 body{
     background:
-        radial-gradient(circle at 15% 10%,rgba(24,148,255,.10),transparent 28%),
-        radial-gradient(circle at 85% 45%,rgba(104,70,255,.08),transparent 30%),
-        var(--bg);
+        radial-gradient(circle at 15% 10%,rgba(216,170,74,.08),transparent 25%),
+        radial-gradient(circle at 85% 55%,rgba(216,170,74,.05),transparent 30%),
+        #050505;
     color:var(--white);
     font-family:Arial,Helvetica,sans-serif;
     overflow-x:hidden;
 }
 
-/* ================= PARTICLES ================= */
+/* ================= BACKGROUND ================= */
 
-#particles{
+.background{
     position:fixed;
     inset:0;
     pointer-events:none;
-    z-index:-1;
+    z-index:-5;
+    overflow:hidden;
+}
+
+.grid-bg{
+    position:absolute;
+    inset:0;
+    opacity:.035;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);
+
+    background-size:55px 55px;
+}
+
+.gold-orb{
+    position:absolute;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+
+    background:radial-gradient(
+        circle,
+        rgba(216,170,74,.13),
+        transparent 68%
+    );
+
+    filter:blur(25px);
+    animation:orb 9s ease-in-out infinite alternate;
+}
+
+.orb1{
+    top:5%;
+    left:-100px;
+}
+
+.orb2{
+    right:-120px;
+    top:45%;
+    animation-delay:2s;
+}
+
+@keyframes orb{
+    from{transform:translateY(-20px)}
+    to{transform:translateY(35px)}
 }
 
 .particle{
     position:absolute;
-    width:2px;
-    height:2px;
+    width:3px;
+    height:3px;
+
+    background:var(--gold2);
+    box-shadow:0 0 10px rgba(244,210,122,.7);
+
     border-radius:50%;
-    background:#61ddff;
-    opacity:.5;
-    animation:float linear infinite;
+    opacity:.45;
+
+    animation:particle linear infinite;
 }
 
-@keyframes float{
+@keyframes particle{
     from{
-        transform:translateY(105vh);
+        transform:translateY(110vh);
         opacity:0;
     }
-    20%{opacity:.5}
-    80%{opacity:.5}
+
+    20%{opacity:.45}
+
+    80%{opacity:.45}
+
     to{
         transform:translateY(-10vh);
         opacity:0;
     }
 }
 
-/* ================= NAVBAR ================= */
+/* ================= NAV ================= */
 
 nav{
     position:fixed;
@@ -84,63 +136,44 @@ nav{
 
     padding:0 6%;
 
-    background:rgba(2,6,13,.78);
+    background:rgba(5,5,5,.86);
     backdrop-filter:blur(18px);
 
-    border-bottom:1px solid var(--border);
+    border-bottom:1px solid var(--line);
 }
 
 .brand{
-    display:flex;
-    align-items:center;
-    gap:11px;
-}
-
-.brand img{
-    width:42px;
-    height:42px;
-    object-fit:contain;
-    border-radius:10px;
-    filter:drop-shadow(0 0 12px rgba(32,191,255,.45));
-}
-
-.brand-name{
-    font-size:18px;
+    font-size:19px;
     font-weight:900;
-    letter-spacing:2px;
+    letter-spacing:3px;
 
-    background:linear-gradient(
-        90deg,
-        white,
-        var(--cyan),
-        var(--blue)
-    );
+    color:var(--gold2);
+}
 
-    -webkit-background-clip:text;
-    color:transparent;
+.brand span{
+    color:white;
 }
 
 nav ul{
-    list-style:none;
     display:flex;
-    align-items:center;
-    gap:22px;
+    list-style:none;
+    gap:24px;
 }
 
 nav a{
-    color:#aebdce;
     text-decoration:none;
-    font-size:13px;
+    color:#999;
+    font-size:12px;
     transition:.25s;
 }
 
 nav a:hover{
-    color:white;
+    color:var(--gold2);
 }
 
 .menu{
     display:none;
-    font-size:27px;
+    font-size:25px;
     cursor:pointer;
 }
 
@@ -148,102 +181,113 @@ nav a:hover{
 
 .hero{
     min-height:100vh;
-    padding:130px 6% 90px;
 
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
 
     text-align:center;
+
+    padding:130px 6% 90px;
 
     position:relative;
 }
 
+.hero::before{
+    content:"";
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    border:1px solid rgba(216,170,74,.08);
+    border-radius:50%;
+
+    transform:rotate(25deg);
+
+    box-shadow:
+        0 0 100px rgba(216,170,74,.04);
+
+    pointer-events:none;
+}
+
 .hero-content{
     max-width:850px;
+    position:relative;
+    z-index:2;
 }
 
-.hero-logo{
-    width:min(230px,55vw);
-    height:min(230px,55vw);
-    object-fit:contain;
-
-    filter:
-        drop-shadow(0 0 20px rgba(32,191,255,.35))
-        drop-shadow(0 0 60px rgba(32,191,255,.12));
-
-    animation:logoFloat 5s ease-in-out infinite;
-}
-
-@keyframes logoFloat{
-    50%{
-        transform:translateY(-9px);
-    }
-}
-
-.hero-tag{
-    display:inline-block;
-    margin:24px 0 18px;
+.eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
 
     padding:8px 15px;
 
+    border:1px solid var(--line);
     border-radius:30px;
 
-    color:#9cecff;
-    background:rgba(32,191,255,.07);
-    border:1px solid rgba(32,191,255,.2);
+    color:var(--gold2);
 
-    font-size:11px;
+    background:rgba(216,170,74,.04);
+
+    font-size:10px;
     font-weight:bold;
-    letter-spacing:1.5px;
+    letter-spacing:2px;
+
+    margin-bottom:22px;
+}
+
+.eyebrow::before{
+    content:"";
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--gold2);
+    box-shadow:0 0 12px var(--gold);
 }
 
 .hero h1{
-    font-size:clamp(60px,12vw,110px);
-    line-height:.85;
-    letter-spacing:-5px;
+    font-size:clamp(65px,13vw,125px);
+
+    line-height:.82;
+
+    letter-spacing:-6px;
+
     font-weight:1000;
 
-    background:
-        linear-gradient(
-            120deg,
-            white 15%,
-            #a9f5ff 38%,
-            #24bfff 55%,
-            #7770ff 80%,
-            white
-        );
+    color:white;
 
-    background-size:250%;
-
-    -webkit-background-clip:text;
-    color:transparent;
-
-    animation:shine 6s linear infinite;
+    text-shadow:
+        0 0 30px rgba(216,170,74,.08);
 }
 
-@keyframes shine{
-    to{
-        background-position:250%;
-    }
+.hero h1 span{
+    color:var(--gold2);
 }
 
 .hero h2{
-    margin-top:22px;
-    font-size:clamp(22px,4vw,34px);
+    margin-top:25px;
+
+    font-size:clamp(20px,4vw,31px);
+
+    letter-spacing:1px;
 }
 
 .hero h2 span{
-    color:var(--cyan);
+    color:var(--gold2);
 }
 
 .hero p{
     max-width:650px;
+
     margin:20px auto 30px;
 
     color:var(--muted);
+
     line-height:1.8;
-    font-size:15px;
+
+    font-size:14px;
 }
 
 .buttons{
@@ -254,37 +298,44 @@ nav a:hover{
 }
 
 .btn{
-    display:inline-block;
-
     padding:14px 23px;
 
-    border-radius:10px;
+    border-radius:8px;
 
     text-decoration:none;
-    color:white;
 
-    font-weight:bold;
-    font-size:13px;
+    color:#050505;
 
-    background:
-        linear-gradient(
-            135deg,
-            #159df3,
-            #6366f1
-        );
+    background:linear-gradient(
+        135deg,
+        var(--gold2),
+        var(--gold),
+        #a87922
+    );
 
-    border:1px solid rgba(255,255,255,.08);
+    font-size:12px;
+    font-weight:900;
 
     transition:.25s;
+
+    box-shadow:0 10px 35px rgba(216,170,74,.1);
 }
 
 .btn:hover{
     transform:translateY(-3px);
-    box-shadow:0 12px 35px rgba(32,191,255,.2);
+
+    box-shadow:
+        0 15px 40px rgba(216,170,74,.2);
 }
 
 .btn.secondary{
-    background:rgba(255,255,255,.045);
+    color:var(--gold2);
+
+    background:rgba(216,170,74,.04);
+
+    border:1px solid var(--line);
+
+    box-shadow:none;
 }
 
 /* ================= SECTIONS ================= */
@@ -299,14 +350,80 @@ section{
 }
 
 .section-title h2{
-    font-size:36px;
+    font-size:34px;
     letter-spacing:-1px;
+}
+
+.section-title h2 span{
+    color:var(--gold2);
 }
 
 .section-title p{
     margin-top:9px;
+
     color:var(--muted);
-    font-size:14px;
+
+    font-size:13px;
+}
+
+/* ================= CARDS ================= */
+
+.card{
+    position:relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.012)
+        );
+
+    border:1px solid var(--line);
+
+    border-radius:15px;
+
+    padding:25px;
+
+    overflow:hidden;
+
+    transition:.3s;
+}
+
+.card::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:45px;
+    height:1px;
+
+    background:var(--gold2);
+
+    box-shadow:0 0 15px var(--gold);
+}
+
+.card:hover{
+    transform:translateY(-5px);
+
+    border-color:rgba(244,210,122,.35);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.35);
+}
+
+.card h3{
+    margin-bottom:9px;
+}
+
+.card p{
+    color:var(--muted);
+
+    font-size:13px;
+
+    line-height:1.7;
 }
 
 /* ================= SERVER ================= */
@@ -317,70 +434,58 @@ section{
 
     display:grid;
     grid-template-columns:1fr 1fr;
+
     gap:18px;
 }
 
-.card{
-    background:var(--card);
-    border:1px solid var(--border);
-
-    border-radius:18px;
-
-    padding:25px;
-
-    backdrop-filter:blur(14px);
-
-    transition:.3s;
-}
-
-.card:hover{
-    transform:translateY(-5px);
-    border-color:rgba(110,234,255,.3);
-    box-shadow:0 20px 50px rgba(0,0,0,.25);
-}
-
 .server-label{
-    color:#8eeaff;
-    font-size:11px;
-    font-weight:bold;
-    letter-spacing:1.5px;
-}
+    color:var(--gold2);
 
-.card h3{
-    margin-top:13px;
-    margin-bottom:10px;
+    font-size:10px;
+    font-weight:bold;
+
+    letter-spacing:2px;
 }
 
 .ip{
-    color:#b9edff;
+    margin:17px 0;
+
+    color:#ddd;
+
     font-family:monospace;
-    font-size:14px;
+
+    font-size:13px;
+
     word-break:break-all;
-    margin:15px 0;
 }
 
 .copy{
     width:100%;
+
     padding:11px;
 
-    border:0;
-    border-radius:8px;
+    border:1px solid rgba(216,170,74,.25);
 
-    color:white;
-    background:linear-gradient(90deg,#159df3,#7064f5);
+    border-radius:7px;
+
+    background:rgba(216,170,74,.07);
+
+    color:var(--gold2);
+
+    font-weight:bold;
+
+    font-size:10px;
 
     cursor:pointer;
-    font-weight:bold;
-    font-size:11px;
 
     transition:.2s;
 }
 
 .copy:hover{
-    filter:brightness(1.12);
+    background:rgba(216,170,74,.14);
 }
 
-/* ================= BANNERS ================= */
+/* ================= WORLD BANNERS ================= */
 
 .worlds{
     max-width:1150px;
@@ -388,89 +493,72 @@ section{
 }
 
 .banner{
-    min-height:350px;
+    min-height:330px;
 
     position:relative;
-    overflow:hidden;
 
     display:flex;
     align-items:center;
 
     padding:50px;
 
-    border-radius:24px;
+    overflow:hidden;
 
-    border:1px solid rgba(95,214,255,.15);
+    border-radius:20px;
 
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.3);
+    border:1px solid var(--line);
 
-    isolation:isolate;
+    background:#090909;
 }
+
+/* diagonal gold line */
 
 .banner::before{
     content:"";
+
     position:absolute;
-    inset:0;
+
+    width:55%;
+    height:1px;
+
+    right:-10%;
+    top:35%;
 
     background:
         linear-gradient(
             90deg,
-            rgba(2,7,14,.98) 0%,
-            rgba(2,10,20,.88) 35%,
-            rgba(2,10,20,.35) 100%
+            transparent,
+            var(--gold2),
+            transparent
         );
 
-    z-index:-1;
+    transform:rotate(-18deg);
+
+    opacity:.5;
 }
+
+/* geometric circle */
 
 .banner::after{
     content:"";
 
     position:absolute;
 
-    width:450px;
-    height:450px;
+    width:260px;
+    height:260px;
 
-    right:-120px;
-    bottom:-230px;
+    right:7%;
+    top:50%;
+
+    transform:translateY(-50%) rotate(20deg);
+
+    border:1px solid rgba(216,170,74,.25);
+
+    box-shadow:
+        inset 0 0 40px rgba(216,170,74,.04),
+        0 0 50px rgba(216,170,74,.04);
 
     border-radius:50%;
-
-    background:rgba(35,195,255,.16);
-
-    filter:blur(70px);
-
-    z-index:-2;
-}
-
-/* subtle pixel/grid texture */
-
-.banner-grid{
-    position:absolute;
-    inset:0;
-
-    opacity:.10;
-
-    background-image:
-        linear-gradient(
-            rgba(100,220,255,.4) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(100,220,255,.4) 1px,
-            transparent 1px
-        );
-
-    background-size:40px 40px;
-
-    mask-image:
-        linear-gradient(
-            to right,
-            transparent,
-            black
-        );
 }
 
 .banner-content{
@@ -483,93 +571,137 @@ section{
 .banner-tag{
     display:inline-block;
 
-    padding:7px 13px;
+    padding:7px 12px;
+
     margin-bottom:17px;
+
+    border:1px solid var(--line);
 
     border-radius:20px;
 
-    background:rgba(53,205,255,.07);
-    border:1px solid rgba(53,205,255,.2);
+    color:var(--gold2);
 
-    color:#8eeaff;
+    font-size:9px;
 
-    font-size:10px;
     font-weight:bold;
 
-    letter-spacing:1.2px;
+    letter-spacing:1.5px;
 }
 
 .banner h2{
-    font-size:clamp(40px,6vw,68px);
+    font-size:clamp(40px,6vw,66px);
+
     line-height:.94;
 
     letter-spacing:-2px;
 
-    margin-bottom:16px;
+    margin-bottom:17px;
+}
+
+.banner h2 span{
+    color:var(--gold2);
 }
 
 .banner p{
-    color:#a7b8c9;
+    max-width:560px;
 
-    max-width:550px;
+    color:#999;
+
+    font-size:13px;
 
     line-height:1.8;
-    font-size:14px;
 }
 
 .banner1{
     background:
+        radial-gradient(
+            circle at 85% 45%,
+            rgba(216,170,74,.12),
+            transparent 25%
+        ),
         linear-gradient(
             135deg,
-            #071522,
-            #0a2940 55%,
-            #06111e
+            #090909,
+            #11100d
         );
 }
 
 .banner2{
     background:
+        radial-gradient(
+            circle at 82% 50%,
+            rgba(216,170,74,.13),
+            transparent 25%
+        ),
         linear-gradient(
             135deg,
-            #080b18,
-            #101d3d 55%,
-            #090d20
+            #080808,
+            #15110a
         );
 }
 
 .banner3{
     background:
+        radial-gradient(
+            circle at 85% 45%,
+            rgba(216,170,74,.1),
+            transparent 25%
+        ),
         linear-gradient(
             135deg,
-            #06151c,
-            #0a3040 55%,
-            #07121d
+            #080808,
+            #10100e
         );
 }
 
-/* clean glowing horizon */
+/* Minecraft block decoration */
 
-.banner-glow{
+.blocks{
     position:absolute;
 
-    right:5%;
-    bottom:15%;
+    right:10%;
+    bottom:16%;
 
-    width:260px;
-    height:2px;
+    width:130px;
+    height:100px;
 
-    background:linear-gradient(
-        90deg,
-        transparent,
-        #5de5ff,
-        transparent
-    );
+    z-index:2;
+}
 
-    box-shadow:0 0 25px #39d7ff;
+.block{
+    position:absolute;
 
-    transform:rotate(-18deg);
+    width:48px;
+    height:48px;
 
-    opacity:.45;
+    border:1px solid rgba(244,210,122,.4);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(244,210,122,.15),
+            rgba(216,170,74,.03)
+        );
+
+    box-shadow:
+        0 0 25px rgba(216,170,74,.08);
+
+    transform:skewY(-12deg);
+}
+
+.block:nth-child(1){
+    right:0;
+    bottom:0;
+}
+
+.block:nth-child(2){
+    right:50px;
+    bottom:20px;
+}
+
+.block:nth-child(3){
+    right:25px;
+    bottom:48px;
 }
 
 /* ================= FEATURES ================= */
@@ -579,66 +711,137 @@ section{
     margin:auto;
 
     display:grid;
+
     grid-template-columns:
         repeat(auto-fit,minmax(220px,1fr));
 
     gap:18px;
 }
 
-.feature-icon{
-    font-size:27px;
-    margin-bottom:14px;
+.icon{
+    font-size:28px;
+    margin-bottom:15px;
 }
 
-.card p{
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.7;
-}
-
-.coming{
+.badge{
     display:inline-block;
 
     margin-top:13px;
+
     padding:6px 10px;
 
     border-radius:20px;
 
-    font-size:10px;
+    border:1px solid var(--line);
+
+    color:var(--gold2);
+
+    font-size:9px;
+
     font-weight:bold;
 
-    color:#8eeaff;
-
-    background:rgba(32,191,255,.06);
-    border:1px solid rgba(32,191,255,.18);
+    letter-spacing:1px;
 }
 
 /* ================= STAFF ================= */
 
+.staff-card{
+    padding:0;
+}
+
+.staff-banner{
+    height:85px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #15120b,
+            #29200d,
+            #0a0907
+        );
+
+    border-bottom:1px solid var(--line);
+}
+
+.staff-banner::before{
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    border:1px solid rgba(244,210,122,.18);
+
+    border-radius:50%;
+
+    right:-50px;
+    top:-70px;
+}
+
+.staff-banner::after{
+    content:"";
+
+    position:absolute;
+
+    width:130px;
+    height:1px;
+
+    background:var(--gold2);
+
+    right:25px;
+    bottom:22px;
+
+    transform:rotate(-25deg);
+
+    box-shadow:0 0 15px var(--gold);
+}
+
+.staff-body{
+    padding:20px 22px 23px;
+}
+
+.staff-icon{
+    font-size:25px;
+}
+
 .staff-name{
-    font-size:19px;
+    margin-top:10px;
+
+    font-size:18px;
+
     font-weight:bold;
 }
 
 .staff-role{
-    color:var(--cyan);
-    font-size:11px;
+    margin-top:5px;
+
+    color:var(--gold2);
+
+    font-size:10px;
+
     font-weight:bold;
-    letter-spacing:1px;
-    margin-top:6px;
+
+    letter-spacing:1.5px;
 }
 
 /* ================= RULES ================= */
 
 .rule{
     display:flex;
-    gap:15px;
+    gap:16px;
 }
 
-.rule-number{
-    color:var(--cyan);
+.number{
+    color:var(--gold2);
+
+    font-size:14px;
+
     font-weight:bold;
-    font-size:16px;
 }
 
 /* ================= SUPPORT ================= */
@@ -650,47 +853,83 @@ section{
 
     padding:10px;
 
-    border-radius:8px;
-
     text-align:center;
 
     text-decoration:none;
-    color:white;
 
-    background:rgba(255,255,255,.04);
+    color:var(--gold2);
 
-    font-size:12px;
+    border:1px solid var(--line);
+
+    border-radius:7px;
+
+    font-size:11px;
 
     transition:.2s;
 }
 
 .support a:hover{
-    background:rgba(32,191,255,.09);
+    background:rgba(216,170,74,.07);
 }
 
 /* ================= DISCORD ================= */
 
-.discord{
+.discord-box{
+    max-width:900px;
+
+    margin:auto;
+
     text-align:center;
+
+    padding:65px 25px;
+
+    border-radius:20px;
+
+    border:1px solid var(--line);
 
     background:
         radial-gradient(
-            circle at center,
-            rgba(32,191,255,.1),
+            circle,
+            rgba(216,170,74,.08),
             transparent 55%
         );
+
+    position:relative;
+
+    overflow:hidden;
 }
 
-.discord-logo{
-    width:110px;
-    height:110px;
+.discord-box::before,
+.discord-box::after{
+    content:"◈";
 
-    object-fit:contain;
+    position:absolute;
 
-    filter:
-        drop-shadow(0 0 25px rgba(32,191,255,.35));
+    color:var(--gold);
 
-    margin-bottom:20px;
+    opacity:.25;
+
+    font-size:60px;
+}
+
+.discord-box::before{
+    left:8%;
+    top:20%;
+}
+
+.discord-box::after{
+    right:8%;
+    bottom:15%;
+}
+
+.discord-box h2{
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.discord-box p{
+    color:var(--muted);
+    margin-bottom:25px;
 }
 
 /* ================= FOOTER ================= */
@@ -700,15 +939,15 @@ footer{
 
     text-align:center;
 
-    border-top:1px solid var(--border);
+    border-top:1px solid var(--line);
 
-    color:#65758a;
+    color:#666;
 
-    font-size:12px;
+    font-size:11px;
 }
 
 footer strong{
-    color:#9deeff;
+    color:var(--gold2);
 }
 
 /* ================= MOBILE ================= */
@@ -733,11 +972,9 @@ footer strong{
 
         gap:0;
 
-        padding:10px 0;
+        background:#060606;
 
-        background:#030811;
-
-        border-bottom:1px solid var(--border);
+        border-bottom:1px solid var(--line);
     }
 
     nav ul.show{
@@ -762,11 +999,15 @@ footer strong{
     }
 
     .hero{
-        padding-top:115px;
+        padding-top:120px;
     }
 
     .hero h1{
-        font-size:62px;
+        font-size:65px;
+    }
+
+    .hero h2{
+        font-size:22px;
     }
 
     .server-grid{
@@ -774,7 +1015,7 @@ footer strong{
     }
 
     .banner{
-        min-height:390px;
+        min-height:380px;
         padding:30px;
     }
 
@@ -782,8 +1023,18 @@ footer strong{
         font-size:43px;
     }
 
-    .banner-grid{
-        opacity:.06;
+    .banner::after{
+        right:-80px;
+        opacity:.5;
+    }
+
+    .blocks{
+        right:-5px;
+        opacity:.45;
+    }
+
+    .discord-box h2{
+        font-size:29px;
     }
 }
 </style>
@@ -791,20 +1042,24 @@ footer strong{
 
 <body>
 
-<!-- PARTICLES -->
-<div id="particles"></div>
+<!-- BACKGROUND -->
 
-<!-- NAVBAR -->
+<div class="background">
+
+    <div class="grid-bg"></div>
+
+    <div class="gold-orb orb1"></div>
+    <div class="gold-orb orb2"></div>
+
+</div>
+
+
+<!-- NAV -->
+
 <nav>
 
     <div class="brand">
-
-        <img src="logo.png" alt="APEX MC">
-
-        <div class="brand-name">
-            APEX MC
-        </div>
-
+        <span>APEX</span> MC
     </div>
 
     <div class="menu" onclick="toggleMenu()">☰</div>
@@ -825,31 +1080,27 @@ footer strong{
 </nav>
 
 
-<!-- ================= HERO ================= -->
+<!-- HERO -->
 
 <section class="hero" id="home">
 
     <div class="hero-content">
 
-        <img
-            src="logo.png"
-            class="hero-logo"
-            alt="APEX MC Logo"
-        >
-
-        <div class="hero-tag">
+        <div class="eyebrow">
             SEASON 2 • SURVIVAL
         </div>
 
-        <h1>APEX MC</h1>
+        <h1>
+            <span>APEX</span> MC
+        </h1>
 
         <h2>
             BUILD YOUR <span>LEGACY.</span>
         </h2>
 
         <p>
-            A Minecraft survival experience built around
-            exploration, economy, PvP and community.
+            A premium Minecraft survival experience built
+            around exploration, economy, PvP and community.
             Create your world. Build your legacy.
         </p>
 
@@ -874,21 +1125,23 @@ footer strong{
 </section>
 
 
-<!-- ================= SERVER ================= -->
+<!-- SERVER -->
 
 <section id="server">
 
     <div class="section-title">
 
-        <h2>SERVER</h2>
+        <h2>SERVER <span>CONNECTION</span></h2>
 
         <p>
-            Connect to APEX MC from Java or Bedrock.
+            Java and Bedrock players can connect to APEX MC.
         </p>
 
     </div>
 
+
     <div class="server-grid">
+
 
         <div class="card">
 
@@ -934,18 +1187,19 @@ footer strong{
 
         </div>
 
+
     </div>
 
 </section>
 
 
-<!-- ================= WORLD ================= -->
+<!-- WORLD -->
 
 <section id="world">
 
     <div class="section-title">
 
-        <h2>THE APEX WORLD</h2>
+        <h2>THE <span>APEX WORLD</span></h2>
 
         <p>
             Explore. Build. Survive.
@@ -959,9 +1213,6 @@ footer strong{
 
         <div class="banner banner1">
 
-            <div class="banner-grid"></div>
-            <div class="banner-glow"></div>
-
             <div class="banner-content">
 
                 <div class="banner-tag">
@@ -970,14 +1221,23 @@ footer strong{
 
                 <h2>
                     CREATE YOUR<br>
-                    EMPIRE.
+                    <span>EMPIRE.</span>
                 </h2>
 
                 <p>
-                    Start from nothing. Build your base,
-                    explore the world, grow your wealth
-                    and create something worth remembering.
+                    Start from nothing. Gather resources,
+                    build your base, explore the world and
+                    create something worth remembering.
                 </p>
+
+            </div>
+
+
+            <div class="blocks">
+
+                <div class="block"></div>
+                <div class="block"></div>
+                <div class="block"></div>
 
             </div>
 
@@ -989,25 +1249,31 @@ footer strong{
 
         <div class="banner banner2">
 
-            <div class="banner-grid"></div>
-            <div class="banner-glow"></div>
-
             <div class="banner-content">
 
                 <div class="banner-tag">
-                    APEX • YOUR LEGACY
+                    POWER • HONOR • LEGACY
                 </div>
 
                 <h2>
                     MAKE YOUR<br>
-                    MARK.
+                    <span>MARK.</span>
                 </h2>
 
                 <p>
-                    Build your own story, create alliances,
-                    compete with other players and rise
-                    through the APEX world.
+                    Build alliances, compete with players,
+                    grow your wealth and create your own
+                    story inside the APEX world.
                 </p>
+
+            </div>
+
+
+            <div class="blocks">
+
+                <div class="block"></div>
+                <div class="block"></div>
+                <div class="block"></div>
 
             </div>
 
@@ -1019,9 +1285,6 @@ footer strong{
 
         <div class="banner banner3">
 
-            <div class="banner-grid"></div>
-            <div class="banner-glow"></div>
-
             <div class="banner-content">
 
                 <div class="banner-tag">
@@ -1030,7 +1293,7 @@ footer strong{
 
                 <h2>
                     RISE ABOVE<br>
-                    THE REST.
+                    <span>THE REST.</span>
                 </h2>
 
                 <p>
@@ -1040,23 +1303,33 @@ footer strong{
 
             </div>
 
+
+            <div class="blocks">
+
+                <div class="block"></div>
+                <div class="block"></div>
+                <div class="block"></div>
+
+            </div>
+
         </div>
+
 
     </div>
 
 </section>
 
 
-<!-- ================= FEATURES ================= -->
+<!-- FEATURES -->
 
 <section id="features">
 
     <div class="section-title">
 
-        <h2>FEATURES</h2>
+        <h2>APEX <span>FEATURES</span></h2>
 
         <p>
-            Everything that makes APEX MC what it is.
+            Everything that makes the network special.
         </p>
 
     </div>
@@ -1067,7 +1340,7 @@ footer strong{
 
         <div class="card">
 
-            <div class="feature-icon">🌎</div>
+            <div class="icon">⛏️</div>
 
             <h3>Survival</h3>
 
@@ -1081,182 +1354,8 @@ footer strong{
 
         <div class="card">
 
-            <div class="feature-icon">💰</div>
+            <div class="icon">💰</div>
 
             <h3>Economy</h3>
 
-            <p>
-                Earn money, trade with players
-                and grow your wealth.
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="feature-icon">⚔️</div>
-
-            <h3>PvP</h3>
-
-            <p>
-                Compete with other players
-                and defend your territory.
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="feature-icon">🤝</div>
-
-            <h3>Community</h3>
-
-            <p>
-                Meet players, create alliances
-                and build together.
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="feature-icon">🌐</div>
-
-            <h3>Cross Platform</h3>
-
-            <p>
-                Java and Bedrock players can
-                join the same APEX world.
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="feature-icon">❤️</div>
-
-            <h3>Lifesteal</h3>
-
-            <p>
-                A new Lifesteal experience
-                is being prepared.
-            </p>
-
-            <span class="coming">
-                COMING SOON
-            </span>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-<!-- ================= STAFF ================= -->
-
-<section id="staff">
-
-    <div class="section-title">
-
-        <h2>STAFF TEAM</h2>
-
-        <p>
-            The people behind APEX MC.
-        </p>
-
-    </div>
-
-
-    <div class="grid">
-
-
-        <div class="card">
-
-            <div class="staff-name">
-                JATIN
-            </div>
-
-            <div class="staff-role">
-                OWNER
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="staff-name">
-                ADITYA
-            </div>
-
-            <div class="staff-role">
-                CO-OWNER
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="staff-name">
-                TABOOSHARK
-            </div>
-
-            <div class="staff-role">
-                MANAGER
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="staff-name">
-                JATIN
-            </div>
-
-            <div class="staff-role">
-                MODERATOR
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="staff-name">
-                CHETAN
-            </div>
-
-            <div class="staff-role">
-                HELPER
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="staff-name">
-                JATIN
-            </div>
-
-            <div class="staff-role">
-                DEVELOPER
-            </div>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-<!-- ================
+  
