@@ -2,908 +2,1261 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>APEX MC | Season 2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>APEX MC | Minecraft Survival</title>
 
 <style>
 :root{
- --blue:#168cff;
- --cyan:#38d9ff;
- --purple:#8b5cf6;
- --dark:#02040a;
- --card:rgba(8,15,30,.82);
- --border:rgba(56,217,255,.2);
- --muted:#8d98ad;
+    --bg:#02060d;
+    --bg2:#06101d;
+    --card:rgba(7,18,31,.82);
+    --blue:#20bfff;
+    --cyan:#6eeaff;
+    --purple:#7567ff;
+    --white:#f4f9ff;
+    --muted:#91a1b5;
+    --border:rgba(91,211,255,.16);
 }
-*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
 body{
- font-family:Arial,Helvetica,sans-serif;
- background:var(--dark);
- color:white;
- overflow-x:hidden;
-}
-body:before{
- content:"";
- position:fixed;
- inset:0;
- z-index:-5;
- background:
- radial-gradient(circle at 10% 10%,rgba(22,140,255,.18),transparent 30%),
- radial-gradient(circle at 90% 80%,rgba(139,92,246,.18),transparent 30%);
-}
-#particles{position:fixed;inset:0;z-index:-3;pointer-events:none}
-.p{
- position:absolute;
- width:3px;height:3px;
- border-radius:50%;
- background:var(--cyan);
- animation:rise linear infinite;
- opacity:.7;
-}
-@keyframes rise{
- from{transform:translateY(105vh);opacity:0}
- 20%{opacity:.8}
- 80%{opacity:.8}
- to{transform:translateY(-10vh);opacity:0}
+    background:
+        radial-gradient(circle at 15% 10%,rgba(24,148,255,.10),transparent 28%),
+        radial-gradient(circle at 85% 45%,rgba(104,70,255,.08),transparent 30%),
+        var(--bg);
+    color:var(--white);
+    font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
 }
 
-/* NAVBAR */
+/* ================= PARTICLES ================= */
+
+#particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+}
+
+.particle{
+    position:absolute;
+    width:2px;
+    height:2px;
+    border-radius:50%;
+    background:#61ddff;
+    opacity:.5;
+    animation:float linear infinite;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(105vh);
+        opacity:0;
+    }
+    20%{opacity:.5}
+    80%{opacity:.5}
+    to{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+}
+
+/* ================= NAVBAR ================= */
+
 nav{
- position:fixed;
- top:0;
- left:0;
- width:100%;
- height:72px;
- padding:0 6%;
- display:flex;
- align-items:center;
- justify-content:space-between;
- z-index:1000;
- background:rgba(2,4,10,.8);
- backdrop-filter:blur(15px);
- border-bottom:1px solid var(--border);
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:70px;
+    z-index:1000;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 6%;
+
+    background:rgba(2,6,13,.78);
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid var(--border);
 }
+
 .brand{
- display:flex;
- align-items:center;
- gap:10px;
+    display:flex;
+    align-items:center;
+    gap:11px;
 }
+
 .brand img{
- width:44px;
- height:44px;
- object-fit:contain;
- filter:drop-shadow(0 0 12px rgba(56,217,255,.5));
+    width:42px;
+    height:42px;
+    object-fit:contain;
+    border-radius:10px;
+    filter:drop-shadow(0 0 12px rgba(32,191,255,.45));
 }
-.logo{
- font-size:21px;
- font-weight:1000;
- letter-spacing:2px;
- background:linear-gradient(90deg,var(--cyan),var(--blue),var(--purple));
- -webkit-background-clip:text;
- color:transparent;
+
+.brand-name{
+    font-size:18px;
+    font-weight:900;
+    letter-spacing:2px;
+
+    background:linear-gradient(
+        90deg,
+        white,
+        var(--cyan),
+        var(--blue)
+    );
+
+    -webkit-background-clip:text;
+    color:transparent;
 }
+
 nav ul{
- display:flex;
- gap:22px;
- list-style:none;
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap:22px;
 }
+
 nav a{
- color:#dbe2f0;
- text-decoration:none;
- font-size:14px;
- transition:.2s;
+    color:#aebdce;
+    text-decoration:none;
+    font-size:13px;
+    transition:.25s;
 }
-nav a:hover{color:var(--cyan)}
-.menu{display:none;font-size:28px}
 
-/* HERO */
+nav a:hover{
+    color:white;
+}
+
+.menu{
+    display:none;
+    font-size:27px;
+    cursor:pointer;
+}
+
+/* ================= HERO ================= */
+
 .hero{
- min-height:100vh;
- padding:120px 6% 70px;
- display:flex;
- align-items:center;
- justify-content:center;
- text-align:center;
- position:relative;
- overflow:hidden;
+    min-height:100vh;
+    padding:130px 6% 90px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    position:relative;
 }
-.hero:before{
- content:"";
- position:absolute;
- width:650px;
- height:650px;
- border-radius:50%;
- background:radial-gradient(circle,rgba(22,140,255,.18),transparent 65%);
- animation:orb 6s ease-in-out infinite;
+
+.hero-content{
+    max-width:850px;
 }
-@keyframes orb{
- 50%{transform:scale(1.25);opacity:.7}
-}
-.hero-content{position:relative;z-index:2}
+
 .hero-logo{
- width:min(260px,62vw);
- height:min(260px,62vw);
- object-fit:contain;
- filter:drop-shadow(0 0 35px rgba(22,140,255,.7));
- animation:floatLogo 4s ease-in-out infinite;
+    width:min(230px,55vw);
+    height:min(230px,55vw);
+    object-fit:contain;
+
+    filter:
+        drop-shadow(0 0 20px rgba(32,191,255,.35))
+        drop-shadow(0 0 60px rgba(32,191,255,.12));
+
+    animation:logoFloat 5s ease-in-out infinite;
 }
-@keyframes floatLogo{
- 50%{transform:translateY(-12px) rotate(1deg)}
+
+@keyframes logoFloat{
+    50%{
+        transform:translateY(-9px);
+    }
 }
-.badge{
- display:inline-block;
- padding:8px 16px;
- margin:18px 0;
- border-radius:30px;
- border:1px solid rgba(56,217,255,.35);
- background:rgba(56,217,255,.08);
- color:#a7efff;
- font-size:13px;
- font-weight:bold;
+
+.hero-tag{
+    display:inline-block;
+    margin:24px 0 18px;
+
+    padding:8px 15px;
+
+    border-radius:30px;
+
+    color:#9cecff;
+    background:rgba(32,191,255,.07);
+    border:1px solid rgba(32,191,255,.2);
+
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:1.5px;
 }
+
 .hero h1{
- font-size:clamp(58px,12vw,110px);
- line-height:.85;
- letter-spacing:-5px;
- font-weight:1000;
- background:linear-gradient(
-  90deg,#fff,var(--cyan),var(--blue),var(--purple),#fff
- );
- background-size:300%;
- -webkit-background-clip:text;
- color:transparent;
- animation:gradient 5s linear infinite;
+    font-size:clamp(60px,12vw,110px);
+    line-height:.85;
+    letter-spacing:-5px;
+    font-weight:1000;
+
+    background:
+        linear-gradient(
+            120deg,
+            white 15%,
+            #a9f5ff 38%,
+            #24bfff 55%,
+            #7770ff 80%,
+            white
+        );
+
+    background-size:250%;
+
+    -webkit-background-clip:text;
+    color:transparent;
+
+    animation:shine 6s linear infinite;
 }
-@keyframes gradient{to{background-position:300%}}
+
+@keyframes shine{
+    to{
+        background-position:250%;
+    }
+}
+
 .hero h2{
- margin-top:20px;
- font-size:clamp(20px,4vw,32px);
+    margin-top:22px;
+    font-size:clamp(22px,4vw,34px);
 }
-.hero h2 span{color:var(--cyan)}
+
+.hero h2 span{
+    color:var(--cyan);
+}
+
 .hero p{
- max-width:650px;
- margin:20px auto 28px;
- color:var(--muted);
- line-height:1.7;
- font-size:16px;
+    max-width:650px;
+    margin:20px auto 30px;
+
+    color:var(--muted);
+    line-height:1.8;
+    font-size:15px;
 }
+
 .buttons{
- display:flex;
- justify-content:center;
- gap:12px;
- flex-wrap:wrap;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
 }
+
 .btn{
- display:inline-block;
- padding:14px 24px;
- border-radius:10px;
- color:white;
- text-decoration:none;
- font-weight:bold;
- background:linear-gradient(135deg,var(--blue),var(--purple));
- border:1px solid rgba(255,255,255,.1);
- box-shadow:0 0 25px rgba(22,140,255,.2);
- transition:.25s;
+    display:inline-block;
+
+    padding:14px 23px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+    color:white;
+
+    font-weight:bold;
+    font-size:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #159df3,
+            #6366f1
+        );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.25s;
 }
+
 .btn:hover{
- transform:translateY(-4px);
- box-shadow:0 0 35px rgba(22,140,255,.5);
-}
-.btn.secondary{background:rgba(255,255,255,.05)}
-
-/* BANNERS */
-.banner{
- min-height:350px;
- border-radius:24px;
- position:relative;
- overflow:hidden;
- display:flex;
- align-items:center;
- padding:50px;
- border:1px solid var(--border);
- box-shadow:0 20px 70px rgba(0,0,0,.35);
-}
-.banner-content{position:relative;z-index:3;max-width:570px}
-.banner h2{
- font-size:clamp(35px,6vw,65px);
- margin-bottom:12px;
- line-height:.95;
-}
-.banner p{
- color:#c2cada;
- line-height:1.7;
- max-width:500px;
-}
-.banner1{
- background:
- radial-gradient(circle at 80% 30%,rgba(56,217,255,.25),transparent 25%),
- linear-gradient(135deg,#061326,#071d3b 55%,#170d35);
-}
-.banner2{
- background:
- radial-gradient(circle at 80% 40%,rgba(168,85,247,.4),transparent 28%),
- linear-gradient(135deg,#080510,#15102f 55%,#03162a);
-}
-.banner3{
- background:
- radial-gradient(circle at 75% 25%,rgba(22,140,255,.35),transparent 30%),
- linear-gradient(135deg,#07101c,#092b43 55%,#100b28);
+    transform:translateY(-3px);
+    box-shadow:0 12px 35px rgba(32,191,255,.2);
 }
 
-/* CSS MINECRAFT BLOCKS */
-.blocks{
- position:absolute;
- right:5%;
- bottom:-20px;
- width:360px;
- height:280px;
- transform:perspective(500px) rotateY(-12deg);
-}
-.block{
- position:absolute;
- width:85px;
- height:85px;
- border:3px solid rgba(0,0,0,.3);
- box-shadow:
- inset 8px 8px rgba(255,255,255,.08),
- inset -8px -8px rgba(0,0,0,.2),
- 0 15px 30px rgba(0,0,0,.3);
-}
-.dirt{
- background:
- repeating-linear-gradient(45deg,#77452d 0 10px,#865036 10px 20px);
-}
-.stone{
- background:
- repeating-linear-gradient(90deg,#68717b 0 8px,#505861 8px 17px);
-}
-.diamond{
- background:
- linear-gradient(135deg,#36e4ff,#0879d1 55%,#063c82);
- box-shadow:0 0 30px rgba(56,217,255,.6);
-}
-.b1{right:20px;bottom:20px}
-.b2{right:110px;bottom:75px}
-.b3{right:200px;bottom:20px}
-.b4{right:105px;bottom:-15px}
-.b5{right:10px;bottom:105px}
-
-/* ANIME ENERGY */
-.energy{
- position:absolute;
- right:6%;
- width:260px;
- height:260px;
- border:2px solid rgba(56,217,255,.3);
- border-radius:50%;
- box-shadow:
- 0 0 30px rgba(56,217,255,.3),
- inset 0 0 30px rgba(139,92,246,.2);
- animation:spin 8s linear infinite;
-}
-.energy:before,
-.energy:after{
- content:"";
- position:absolute;
- inset:25px;
- border:2px solid rgba(139,92,246,.35);
- transform:rotate(45deg);
-}
-.energy:after{
- inset:55px;
- transform:rotate(-45deg);
-}
-@keyframes spin{
- to{transform:rotate(360deg)}
-}
-.slash{
- position:absolute;
- width:330px;
- height:4px;
- background:linear-gradient(90deg,transparent,var(--cyan),white,transparent);
- box-shadow:0 0 18px var(--cyan);
- transform:rotate(-35deg);
- right:0;
- animation:slash 2.5s infinite;
-}
-@keyframes slash{
- 0%,100%{opacity:.1;transform:translateX(100px) rotate(-35deg)}
- 50%{opacity:1;transform:translateX(-100px) rotate(-35deg)}
+.btn.secondary{
+    background:rgba(255,255,255,.045);
 }
 
-/* SECTIONS */
-section{padding:90px 7%}
-.title{text-align:center;margin-bottom:40px}
-.title h2{font-size:38px;margin-bottom:9px}
-.title p{color:var(--muted)}
+/* ================= SECTIONS ================= */
 
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:18px;
- max-width:1100px;
- margin:auto;
+section{
+    padding:95px 6%;
 }
-.card{
- background:var(--card);
- border:1px solid var(--border);
- border-radius:18px;
- padding:25px;
- backdrop-filter:blur(12px);
- transition:.3s;
+
+.section-title{
+    text-align:center;
+    margin-bottom:42px;
 }
-.card:hover{
- transform:translateY(-7px);
- border-color:rgba(56,217,255,.5);
- box-shadow:0 15px 50px rgba(22,140,255,.13);
+
+.section-title h2{
+    font-size:36px;
+    letter-spacing:-1px;
 }
-.icon{font-size:33px;margin-bottom:14px}
-.card h3{margin-bottom:9px}
-.card p{
- color:var(--muted);
- font-size:14px;
- line-height:1.65;
+
+.section-title p{
+    margin-top:9px;
+    color:var(--muted);
+    font-size:14px;
 }
+
+/* ================= SERVER ================= */
 
 .server-grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:18px;
- max-width:900px;
- margin:auto;
+    max-width:950px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
 }
-.status{
- display:inline-flex;
- align-items:center;
- gap:7px;
- color:#4ade80;
- font-size:13px;
- font-weight:bold;
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:25px;
+
+    backdrop-filter:blur(14px);
+
+    transition:.3s;
 }
-.dot{
- width:8px;height:8px;
- background:#4ade80;
- border-radius:50%;
- box-shadow:0 0 12px #4ade80;
+
+.card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(110,234,255,.3);
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
 }
+
+.server-label{
+    color:#8eeaff;
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:1.5px;
+}
+
+.card h3{
+    margin-top:13px;
+    margin-bottom:10px;
+}
+
 .ip{
- margin:14px 0 17px;
- color:#a9ecff;
- word-break:break-all;
+    color:#b9edff;
+    font-family:monospace;
+    font-size:14px;
+    word-break:break-all;
+    margin:15px 0;
 }
+
 .copy{
- width:100%;
- padding:11px;
- border:0;
- border-radius:8px;
- color:white;
- font-weight:bold;
- cursor:pointer;
- background:linear-gradient(90deg,var(--blue),var(--purple));
+    width:100%;
+    padding:11px;
+
+    border:0;
+    border-radius:8px;
+
+    color:white;
+    background:linear-gradient(90deg,#159df3,#7064f5);
+
+    cursor:pointer;
+    font-weight:bold;
+    font-size:11px;
+
+    transition:.2s;
 }
 
-.staff-name{font-size:20px;font-weight:bold}
-.staff-role{color:var(--cyan);margin-top:5px;font-size:13px}
+.copy:hover{
+    filter:brightness(1.12);
+}
 
-.rule{display:flex;gap:15px}
-.num{color:var(--cyan);font-weight:bold;font-size:18px}
+/* ================= BANNERS ================= */
+
+.worlds{
+    max-width:1150px;
+    margin:auto;
+}
+
+.banner{
+    min-height:350px;
+
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    align-items:center;
+
+    padding:50px;
+
+    border-radius:24px;
+
+    border:1px solid rgba(95,214,255,.15);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.3);
+
+    isolation:isolate;
+}
+
+.banner::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(2,7,14,.98) 0%,
+            rgba(2,10,20,.88) 35%,
+            rgba(2,10,20,.35) 100%
+        );
+
+    z-index:-1;
+}
+
+.banner::after{
+    content:"";
+
+    position:absolute;
+
+    width:450px;
+    height:450px;
+
+    right:-120px;
+    bottom:-230px;
+
+    border-radius:50%;
+
+    background:rgba(35,195,255,.16);
+
+    filter:blur(70px);
+
+    z-index:-2;
+}
+
+/* subtle pixel/grid texture */
+
+.banner-grid{
+    position:absolute;
+    inset:0;
+
+    opacity:.10;
+
+    background-image:
+        linear-gradient(
+            rgba(100,220,255,.4) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(100,220,255,.4) 1px,
+            transparent 1px
+        );
+
+    background-size:40px 40px;
+
+    mask-image:
+        linear-gradient(
+            to right,
+            transparent,
+            black
+        );
+}
+
+.banner-content{
+    position:relative;
+    z-index:3;
+
+    max-width:620px;
+}
+
+.banner-tag{
+    display:inline-block;
+
+    padding:7px 13px;
+    margin-bottom:17px;
+
+    border-radius:20px;
+
+    background:rgba(53,205,255,.07);
+    border:1px solid rgba(53,205,255,.2);
+
+    color:#8eeaff;
+
+    font-size:10px;
+    font-weight:bold;
+
+    letter-spacing:1.2px;
+}
+
+.banner h2{
+    font-size:clamp(40px,6vw,68px);
+    line-height:.94;
+
+    letter-spacing:-2px;
+
+    margin-bottom:16px;
+}
+
+.banner p{
+    color:#a7b8c9;
+
+    max-width:550px;
+
+    line-height:1.8;
+    font-size:14px;
+}
+
+.banner1{
+    background:
+        linear-gradient(
+            135deg,
+            #071522,
+            #0a2940 55%,
+            #06111e
+        );
+}
+
+.banner2{
+    background:
+        linear-gradient(
+            135deg,
+            #080b18,
+            #101d3d 55%,
+            #090d20
+        );
+}
+
+.banner3{
+    background:
+        linear-gradient(
+            135deg,
+            #06151c,
+            #0a3040 55%,
+            #07121d
+        );
+}
+
+/* clean glowing horizon */
+
+.banner-glow{
+    position:absolute;
+
+    right:5%;
+    bottom:15%;
+
+    width:260px;
+    height:2px;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #5de5ff,
+        transparent
+    );
+
+    box-shadow:0 0 25px #39d7ff;
+
+    transform:rotate(-18deg);
+
+    opacity:.45;
+}
+
+/* ================= FEATURES ================= */
+
+.grid{
+    max-width:1100px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(220px,1fr));
+
+    gap:18px;
+}
+
+.feature-icon{
+    font-size:27px;
+    margin-bottom:14px;
+}
+
+.card p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.7;
+}
 
 .coming{
- display:inline-block;
- margin-top:13px;
- padding:6px 10px;
- border-radius:20px;
- font-size:11px;
- font-weight:bold;
- color:#a9ecff;
- background:rgba(56,217,255,.08);
- border:1px solid rgba(56,217,255,.2);
+    display:inline-block;
+
+    margin-top:13px;
+    padding:6px 10px;
+
+    border-radius:20px;
+
+    font-size:10px;
+    font-weight:bold;
+
+    color:#8eeaff;
+
+    background:rgba(32,191,255,.06);
+    border:1px solid rgba(32,191,255,.18);
 }
+
+/* ================= STAFF ================= */
+
+.staff-name{
+    font-size:19px;
+    font-weight:bold;
+}
+
+.staff-role{
+    color:var(--cyan);
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:1px;
+    margin-top:6px;
+}
+
+/* ================= RULES ================= */
+
+.rule{
+    display:flex;
+    gap:15px;
+}
+
+.rule-number{
+    color:var(--cyan);
+    font-weight:bold;
+    font-size:16px;
+}
+
+/* ================= SUPPORT ================= */
 
 .support a{
- display:block;
- margin-top:14px;
- padding:11px;
- border-radius:8px;
- text-align:center;
- color:white;
- text-decoration:none;
- background:rgba(255,255,255,.04);
-}
-.support a:hover{background:rgba(56,217,255,.1)}
+    display:block;
 
-.cta{
- text-align:center;
- background:radial-gradient(circle,rgba(22,140,255,.16),transparent 55%);
+    margin-top:15px;
+
+    padding:10px;
+
+    border-radius:8px;
+
+    text-align:center;
+
+    text-decoration:none;
+    color:white;
+
+    background:rgba(255,255,255,.04);
+
+    font-size:12px;
+
+    transition:.2s;
 }
-.cta img{
- width:120px;
- height:120px;
- object-fit:contain;
- filter:drop-shadow(0 0 25px rgba(56,217,255,.6));
- margin-bottom:15px;
+
+.support a:hover{
+    background:rgba(32,191,255,.09);
 }
+
+/* ================= DISCORD ================= */
+
+.discord{
+    text-align:center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(32,191,255,.1),
+            transparent 55%
+        );
+}
+
+.discord-logo{
+    width:110px;
+    height:110px;
+
+    object-fit:contain;
+
+    filter:
+        drop-shadow(0 0 25px rgba(32,191,255,.35));
+
+    margin-bottom:20px;
+}
+
+/* ================= FOOTER ================= */
 
 footer{
- padding:35px 7%;
- text-align:center;
- color:#667087;
- border-top:1px solid var(--border);
- font-size:13px;
+    padding:35px 6%;
+
+    text-align:center;
+
+    border-top:1px solid var(--border);
+
+    color:#65758a;
+
+    font-size:12px;
 }
 
+footer strong{
+    color:#9deeff;
+}
+
+/* ================= MOBILE ================= */
+
 @media(max-width:760px){
- nav ul{
-  display:none;
-  position:absolute;
-  top:72px;
-  left:0;
-  width:100%;
-  flex-direction:column;
-  padding:20px;
-  background:#050914;
-  border-bottom:1px solid var(--border);
- }
- nav ul.show{display:flex}
- .menu{display:block}
- section{padding:70px 5%}
- .hero h1{font-size:60px}
- .hero-logo{width:210px;height:210px}
- .server-grid{grid-template-columns:1fr}
- .banner{padding:30px;min-height:430px}
- .blocks,.energy{opacity:.28;right:-70px}
+
+    nav{
+        padding:0 5%;
+    }
+
+    nav ul{
+        display:none;
+
+        position:absolute;
+
+        top:70px;
+        left:0;
+
+        width:100%;
+
+        flex-direction:column;
+
+        gap:0;
+
+        padding:10px 0;
+
+        background:#030811;
+
+        border-bottom:1px solid var(--border);
+    }
+
+    nav ul.show{
+        display:flex;
+    }
+
+    nav li{
+        width:100%;
+    }
+
+    nav a{
+        display:block;
+        padding:14px 25px;
+    }
+
+    .menu{
+        display:block;
+    }
+
+    section{
+        padding:75px 5%;
+    }
+
+    .hero{
+        padding-top:115px;
+    }
+
+    .hero h1{
+        font-size:62px;
+    }
+
+    .server-grid{
+        grid-template-columns:1fr;
+    }
+
+    .banner{
+        min-height:390px;
+        padding:30px;
+    }
+
+    .banner h2{
+        font-size:43px;
+    }
+
+    .banner-grid{
+        opacity:.06;
+    }
 }
 </style>
 </head>
 
 <body>
 
+<!-- PARTICLES -->
 <div id="particles"></div>
 
 <!-- NAVBAR -->
 <nav>
- <div class="brand">
-  <img src="logo.png" alt="APEX MC Logo">
-  <div class="logo">APEX MC</div>
- </div>
 
- <div class="menu" onclick="toggleMenu()">☰</div>
+    <div class="brand">
 
- <ul id="nav">
-  <li><a href="#home">Home</a></li>
-  <li><a href="#server">Server</a></li>
-  <li><a href="#banners">World</a></li>
-  <li><a href="#features">Features</a></li>
-  <li><a href="#staff">Staff</a></li>
-  <li><a href="#rules">Rules</a></li>
-  <li><a href="#support">Support</a></li>
-  <li><a href="#discord">Discord</a></li>
- </ul>
+        <img src="logo.png" alt="APEX MC">
+
+        <div class="brand-name">
+            APEX MC
+        </div>
+
+    </div>
+
+    <div class="menu" onclick="toggleMenu()">☰</div>
+
+    <ul id="nav">
+
+        <li><a href="#home">Home</a></li>
+        <li><a href="#server">Server</a></li>
+        <li><a href="#world">World</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#staff">Staff</a></li>
+        <li><a href="#rules">Rules</a></li>
+        <li><a href="#support">Support</a></li>
+        <li><a href="#discord">Discord</a></li>
+
+    </ul>
+
 </nav>
 
-<!-- HERO -->
+
+<!-- ================= HERO ================= -->
+
 <section class="hero" id="home">
- <div class="hero-content">
 
-  <img class="hero-logo" src="logo.png" alt="APEX MC">
+    <div class="hero-content">
 
-  <div class="badge">⚡ SEASON 2 • SURVIVAL</div>
+        <img
+            src="logo.png"
+            class="hero-logo"
+            alt="APEX MC Logo"
+        >
 
-  <h1>APEX MC</h1>
+        <div class="hero-tag">
+            SEASON 2 • SURVIVAL
+        </div>
 
-  <h2>BUILD YOUR <span>LEGACY.</span></h2>
+        <h1>APEX MC</h1>
 
-  <p>
-   Enter a Minecraft survival world where your base,
-   economy and reputation are yours to build.
-   Create your empire. Make your mark.
-  </p>
+        <h2>
+            BUILD YOUR <span>LEGACY.</span>
+        </h2>
 
-  <div class="buttons">
-   <a href="#server" class="btn">🎮 PLAY NOW</a>
-   <a href="https://discord.gg/7N79Czf3M" target="_blank" class="btn secondary">
-    💬 JOIN DISCORD
-   </a>
-  </div>
+        <p>
+            A Minecraft survival experience built around
+            exploration, economy, PvP and community.
+            Create your world. Build your legacy.
+        </p>
 
- </div>
+        <div class="buttons">
+
+            <a href="#server" class="btn">
+                PLAY APEX
+            </a>
+
+            <a
+                href="https://discord.gg/7N79Czf3M"
+                target="_blank"
+                class="btn secondary"
+            >
+                JOIN DISCORD
+            </a>
+
+        </div>
+
+    </div>
+
 </section>
 
-<!-- SERVER -->
+
+<!-- ================= SERVER ================= -->
+
 <section id="server">
 
- <div class="title">
-  <h2>⚡ ENTER APEX</h2>
-  <p>Choose your Minecraft edition.</p>
- </div>
+    <div class="section-title">
 
- <div class="server-grid">
+        <h2>SERVER</h2>
 
-  <div class="card">
-   <div class="status">
-    <span class="dot"></span> JAVA EDITION
-   </div>
+        <p>
+            Connect to APEX MC from Java or Bedrock.
+        </p>
 
-   <h3 style="margin-top:15px">Java Server</h3>
+    </div>
 
-   <div class="ip">node.nervehost.sryze.cc:23355</div>
+    <div class="server-grid">
 
-   <button class="copy"
-    onclick="copyIP('node.nervehost.sryze.cc:23355')">
-    COPY JAVA IP
-   </button>
-  </div>
+        <div class="card">
 
-  <div class="card">
-   <div class="status">
-    <span class="dot"></span> BEDROCK EDITION
-   </div>
+            <div class="server-label">
+                JAVA EDITION
+            </div>
 
-   <h3 style="margin-top:15px">Bedrock Server</h3>
+            <h3>Java Server</h3>
 
-   <div class="ip">
-    node.nervehost.sryze.cc<br>
-    Port: 23355
-   </div>
+            <div class="ip">
+                node.nervehost.sryze.cc:23355
+            </div>
 
-   <button class="copy"
-    onclick="copyIP('node.nervehost.sryze.cc')">
-    COPY BEDROCK IP
-   </button>
-  </div>
+            <button
+                class="copy"
+                onclick="copyText('node.nervehost.sryze.cc:23355')"
+            >
+                COPY JAVA IP
+            </button>
 
- </div>
-</section>
+        </div>
 
-<!-- BANNERS -->
-<section id="banners">
 
- <div class="title">
-  <h2>🌌 ENTER THE WORLD</h2>
-  <p>Survive. Fight. Build. Become legendary.</p>
- </div>
+        <div class="card">
 
- <!-- MINECRAFT BANNER -->
- <div class="banner banner1">
+            <div class="server-label">
+                BEDROCK EDITION
+            </div>
 
-  <div class="banner-content">
-   <div class="badge">⛏️ MINECRAFT SURVIVAL</div>
-   <h2>CREATE YOUR<br>EMPIRE.</h2>
-   <p>
-    Gather resources, build massive bases,
-    explore the world and dominate the economy.
-   </p>
-  </div>
+            <h3>Bedrock Server</h3>
 
-  <div class="blocks">
-   <div class="block dirt b1"></div>
-   <div class="block stone b2"></div>
-   <div class="block diamond b3"></div>
-   <div class="block stone b4"></div>
-   <div class="block diamond b5"></div>
-  </div>
+            <div class="ip">
+                node.nervehost.sryze.cc<br>
+                Port: 23355
+            </div>
 
- </div>
+            <button
+                class="copy"
+                onclick="copyText('node.nervehost.sryze.cc')"
+            >
+                COPY BEDROCK IP
+            </button>
 
- <br>
+        </div>
 
- <!-- ANIME BANNER -->
- <div class="banner banner2">
-
-  <div class="banner-content">
-   <div class="badge">⚔️ POWER • HONOR • LEGACY</div>
-   <h2>UNLEASH<br>YOUR POWER.</h2>
-   <p>
-    A cinematic anime-inspired atmosphere
-    combined with the freedom of Minecraft.
-    Your story starts here.
-   </p>
-  </div>
-
-  <div class="energy"></div>
-  <div class="slash"></div>
-
- </div>
-
- <br>
-
- <!-- CRYSTAL BANNER -->
- <div class="banner banner3">
-
-  <div class="banner-content">
-   <div class="badge">💎 APEX WORLD</div>
-   <h2>RISE ABOVE<br>THE REST.</h2>
-   <p>
-    Explore dangerous lands, collect rare resources
-    and become a name everyone remembers.
-   </p>
-  </div>
-
-  <div class="blocks">
-   <div class="block diamond b1"></div>
-   <div class="block stone b2"></div>
-   <div class="block diamond b3"></div>
-   <div class="block dirt b4"></div>
-  </div>
-
- </div>
+    </div>
 
 </section>
 
-<!-- FEATURES -->
+
+<!-- ================= WORLD ================= -->
+
+<section id="world">
+
+    <div class="section-title">
+
+        <h2>THE APEX WORLD</h2>
+
+        <p>
+            Explore. Build. Survive.
+        </p>
+
+    </div>
+
+
+    <div class="worlds">
+
+
+        <div class="banner banner1">
+
+            <div class="banner-grid"></div>
+            <div class="banner-glow"></div>
+
+            <div class="banner-content">
+
+                <div class="banner-tag">
+                    SURVIVAL • SEASON 2
+                </div>
+
+                <h2>
+                    CREATE YOUR<br>
+                    EMPIRE.
+                </h2>
+
+                <p>
+                    Start from nothing. Build your base,
+                    explore the world, grow your wealth
+                    and create something worth remembering.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <br>
+
+
+        <div class="banner banner2">
+
+            <div class="banner-grid"></div>
+            <div class="banner-glow"></div>
+
+            <div class="banner-content">
+
+                <div class="banner-tag">
+                    APEX • YOUR LEGACY
+                </div>
+
+                <h2>
+                    MAKE YOUR<br>
+                    MARK.
+                </h2>
+
+                <p>
+                    Build your own story, create alliances,
+                    compete with other players and rise
+                    through the APEX world.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <br>
+
+
+        <div class="banner banner3">
+
+            <div class="banner-grid"></div>
+            <div class="banner-glow"></div>
+
+            <div class="banner-content">
+
+                <div class="banner-tag">
+                    EXPLORE • SURVIVE • BUILD
+                </div>
+
+                <h2>
+                    RISE ABOVE<br>
+                    THE REST.
+                </h2>
+
+                <p>
+                    Discover new places, collect rare resources
+                    and turn your ideas into something legendary.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+
 <section id="features">
 
- <div class="title">
-  <h2>🔥 APEX FEATURES</h2>
-  <p>Everything that makes the network special.</p>
- </div>
+    <div class="section-title">
 
- <div class="grid">
+        <h2>FEATURES</h2>
 
-  <div class="card">
-   <div class="icon">🌎</div>
-   <h3>Survival</h3>
-   <p>Build, explore, gather resources and create your own kingdom.</p>
-  </div>
+        <p>
+            Everything that makes APEX MC what it is.
+        </p>
 
-  <div class="card">
-   <div class="icon">💰</div>
-   <h3>Economy</h3>
-   <p>Earn money, trade with players and build your wealth.</p>
-  </div>
+    </div>
 
-  <div class="card">
-   <div class="icon">⚔️</div>
-   <h3>PvP</h3>
-   <p>Fight other players and prove your strength.</p>
-  </div>
 
-  <div class="card">
-   <div class="icon">🤝</div>
-   <h3>Community</h3>
-   <p>Make friends, create alliances and build together.</p>
-  </div>
+    <div class="grid">
 
-  <div class="card">
-   <div class="icon">🌐</div>
-   <h3>Cross Platform</h3>
-   <p>Java and Bedrock players can join the APEX world.</p>
-  </div>
 
-  <div class="card">
-   <div class="icon">❤️</div>
-   <h3>Lifesteal</h3>
-   <p>A new Lifesteal experience is coming to APEX MC.</p>
-   <span class="coming">COMING SOON</span>
-  </div>
+        <div class="card">
 
- </div>
+            <div class="feature-icon">🌎</div>
+
+            <h3>Survival</h3>
+
+            <p>
+                Explore, gather resources and build
+                your own world.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="feature-icon">💰</div>
+
+            <h3>Economy</h3>
+
+            <p>
+                Earn money, trade with players
+                and grow your wealth.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="feature-icon">⚔️</div>
+
+            <h3>PvP</h3>
+
+            <p>
+                Compete with other players
+                and defend your territory.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="feature-icon">🤝</div>
+
+            <h3>Community</h3>
+
+            <p>
+                Meet players, create alliances
+                and build together.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="feature-icon">🌐</div>
+
+            <h3>Cross Platform</h3>
+
+            <p>
+                Java and Bedrock players can
+                join the same APEX world.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="feature-icon">❤️</div>
+
+            <h3>Lifesteal</h3>
+
+            <p>
+                A new Lifesteal experience
+                is being prepared.
+            </p>
+
+            <span class="coming">
+                COMING SOON
+            </span>
+
+        </div>
+
+
+    </div>
+
 </section>
 
-<!-- STAFF -->
+
+<!-- ================= STAFF ================= -->
+
 <section id="staff">
 
- <div class="title">
-  <h2>👑 APEX STAFF</h2>
-  <p>The team behind the server.</p>
- </div>
+    <div class="section-title">
 
- <div class="grid">
+        <h2>STAFF TEAM</h2>
 
-  <div class="card">
-   <div class="icon">👑</div>
-   <div class="staff-name">JATIN</div>
-   <div class="staff-role">OWNER</div>
-  </div>
+        <p>
+            The people behind APEX MC.
+        </p>
 
-  <div class="card">
-   <div class="icon">⚡</div>
-   <div class="staff-name">ADITYA</div>
-   <div class="staff-role">CO-OWNER</div>
-  </div>
+    </div>
 
-  <div class="card">
-   <div class="icon">💎</div>
-   <div class="staff-name">TABOOSHARK</div>
-   <div class="staff-role">MANAGER</div>
-  </div>
 
-  <div class="card">
-   <div class="icon">🛡️</div>
-   <div class="staff-name">JATIN</div>
-   <div class="staff-role">MODERATOR</div>
-  </div>
+    <div class="grid">
 
-  <div class="card">
-   <div class="icon">🔰</div>
-   <div class="staff-name">CHETAN</div>
-   <div class="staff-role">HELPER</div>
-  </div>
 
-  <div class="card">
-   <div class="icon">💻</div>
-   <div class="staff-name">JATIN</div>
-   <div class="staff-role">DEVELOPER</div>
-  </div>
+        <div class="card">
 
- </div>
-</section>
+            <div class="staff-name">
+                JATIN
+            </div>
 
-<!-- RULES -->
-<section id="rules">
+            <div class="staff-role">
+                OWNER
+            </div>
 
- <div class="title">
-  <h2>📜 SERVER RULES</h2>
-  <p>Respect the server. Respect the players.</p>
- </div>
+        </div>
 
- <div class="grid">
 
-  <div class="card rule">
-   <span class="num">01</span>
-   <div>
-    <h3>Respect Everyone</h3>
-    <p>No harassment, hate speech or unnecessary toxicity.</p>
-   </div>
-  </div>
+        <div class="card">
 
-  <div class="card rule">
-   <span class="num">02</span>
-   <div>
-    <h3>No Cheating</h3>
-    <p>Hacks and unfair modifications are not allowed.</p>
-   </div>
-  </div>
+            <div class="staff-name">
+                ADITYA
+            </div>
 
-  <div class="card rule">
-   <span class="num">03</span>
-   <div>
-    <h3>No Exploiting</h3>
-    <p>Do not abuse bugs or glitches for an unfair advantage.</p>
-   </div>
-  </div>
+            <div class="staff-role">
+                CO-OWNER
+            </div>
 
-  <div class="card rule">
-   <span class="num">04</span>
-   <div>
-    <h3>No Spam</h3>
-    <p>Avoid chat spam, advertising and repeated messages.</p>
-   </div>
-  </div>
+        </div>
 
-  <div class="card rule">
-   <span class="num">05</span>
-   <div>
-    <h3>No Scamming</h3>
-    <p>Do not intentionally deceive or scam other players.</p>
-   </div>
-  </div>
 
-  <div class="card rule">
-   <span class="num">06</span>
-   <div>
-    <h3>Respect Staff</h3>
-    <p>Follow legitimate staff instructions and decisions.</p>
-   </div>
-  </div>
+        <div class="card">
 
- </div>
-</section>
+            <div class="staff-name">
+                TABOOSHARK
+            </div>
 
-<!-- SUPPORT -->
-<section id="support">
+            <div class="staff-role">
+                MANAGER
+            </div>
 
- <div class="title">
-  <h2>🎫 SUPPORT CENTER</h2>
-  <p>Need help? We've got you.</p>
- </div>
+        </div>
 
- <div class="grid support">
 
-  <div class="card">
-   <div class="icon">💬</div>
-   <h3>General Support</h3>
-   <p>Questions or problems?</p>
-   <a href="https://discord.gg/7N79Czf3M" target="_blank">Open Ticket →</a>
-  </div>
+        <div class="card">
 
-  <div class="card">
-   <div class="icon">🚨</div>
-   <h3>Player Report</h3>
-   <p>Report a player breaking rules.</p>
-   <a href="https://discord.gg/7N79Czf3M" target="_blank">Report →</a>
-  </div>
+            <div class="staff-name">
+                JATIN
+            </div>
 
-  <div class="card">
-   <div class="icon">⚖️</div>
-   <h3>Ban Appeal</h3>
-   <p>Appeal a punishment.</p>
-   <a href="https://discord.gg/7N79Czf3M" target="_blank">Appeal →</a>
-  </div>
+            <div class="staff-role">
+                MODERATOR
+            </div>
 
-  <div class="card">
-   <div class="icon">💳</div>
-   <h3>Purchase Support</h3>
-   <p>Problems with purchases or ranks.</p>
-   <a href="https://discord.gg/7N79Czf3M" target="_blank">Get Help →</a>
-  </div>
+        </div>
 
-  <div class="card">
-   <div class="icon">📋</div>
-   <h3>Staff Application</h3>
-   <p>Want to join the staff team?</p>
-   <a href="https://discord.gg/7N79Czf3M" target="_blank">Apply →</a>
-  </div>
 
-  <div class="card">
-   <div class="icon">🤝</div>
-   <h3>Partnership</h3>
-   <p>Interested in partnering with APEX?</p>
-   <a href="https://discord.gg/7N79Czf3M" target="_blank">Partner →</a>
-  </div>
+        <div class="card">
 
- </div>
-</section>
+            <div class="staff-name">
+                CHETAN
+            </div>
 
-<!-- DISCORD -->
-<section class="cta" id="discord">
+            <div class="staff-role">
+                HELPER
+            </div>
 
- <img src="logo.png" alt="APEX MC">
+        </div>
 
- <div class="title">
-  <h2>JOIN APEX MC</h2>
-  <p>Connect with the community on Discord.</p>
- </div>
 
- <a
-  href="https://discord.gg/7N79Czf3M"
-  target="_blank"
-  class="btn">
-  💜 JOIN DISCORD
- </a>
+        <div class="card">
+
+            <div class="staff-name">
+                JATIN
+            </div>
+
+            <div class="staff-role">
+                DEVELOPER
+            </div>
+
+        </div>
+
+
+    </div>
 
 </section>
 
-<footer>
- © 2026 APEX MC • Season 2
- <br><br>
- Build Your Legacy. Rule Your World.
-</footer>
 
-<script>
-
-/* MOBILE MENU */
-function toggleMenu(){
- document.getElementById("nav").classList.toggle("show");
-}
-
-/* COPY IP */
-function copyIP(text){
- navigator.clipboard.writeText(text)
- .then(()=>alert("Copied: "+text))
- .catch(()=>alert("IP: "+text));
-}
-
-/* PARTICLES */
-const box=document.getElementById("particles");
-
-for(let i=0;i<75;i++){
- const p=document.createElement("div");
- p.className="p";
- p.style.left=Math.random()*100+"%";
- p.style.animationDuration=(5+Math.random()*12)+"s";
- p.style.animationDelay=(-Math.random()*15)+"s";
- box.appendChild(p);
-}
-
-/* CLOSE MENU */
-document.querySelectorAll("#nav a").forEach(a=>{
- a.onclick=()=>{
-  document.getElementById("nav").classList.remove("show");
- };
-});
-
-</script>
-
-</body>
-  </html>
+<!-- ================
